@@ -78,7 +78,7 @@ public class TodoListActivity extends AppCompatActivity  implements TodoCreateFr
         refreshList();
     }
 
-    private void refreshList() {
+    public void refreshList() {
         if (loadTodosTask != null) {
             loadTodosTask.cancel(false);
         }
@@ -110,7 +110,7 @@ public class TodoListActivity extends AppCompatActivity  implements TodoCreateFr
     }
 
     public void showTodos(Cursor result) {
-        adapter = new TodoAdapter(getApplicationContext(), result, mTwoPane);
+        adapter = new TodoAdapter(getApplicationContext(), result, mTwoPane, this);
         setupRecyclerView(recyclerView, adapter);
     }
 
@@ -127,6 +127,12 @@ public class TodoListActivity extends AppCompatActivity  implements TodoCreateFr
             TodoCreateFragment createFragment = new TodoCreateFragment();
             android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
             createFragment.show(fm, TodoCreateFragment.TAG);
+        }
+        if(item.getItemId() == R.id.deleteAll){
+            dbLoader.deleteAll();
+            refreshList();
+
+
         }
         return super.onOptionsItemSelected(item);
     }

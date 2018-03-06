@@ -12,6 +12,7 @@ public class Todo {
     private int priority;
     private String dueDate;
     private String description;
+    private long Id;
 
     public Todo(String title, int priority, String dueDate, String description) {
         this.title = title;
@@ -19,6 +20,16 @@ public class Todo {
         this.dueDate = dueDate;
         this.description = description;
     }
+
+    public Todo(String title, int priority, String dueDate, String description, long Id) {
+        this.title = title;
+        this.priority = priority;
+        this.dueDate = dueDate;
+        this.description = description;
+        this.Id = Id;
+    }
+
+    public long getId(){return Id;}
 
     public String getTitle() {
         return title;

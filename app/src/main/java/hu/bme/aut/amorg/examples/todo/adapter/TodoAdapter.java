@@ -1,5 +1,6 @@
 package hu.bme.aut.amorg.examples.todo.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -15,15 +16,20 @@ import android.widget.TextView;
 import hu.bme.aut.amorg.examples.todo.R;
 import hu.bme.aut.amorg.examples.todo.TodoDetailActivity;
 import hu.bme.aut.amorg.examples.todo.TodoDetailFragment;
+import hu.bme.aut.amorg.examples.todo.TodoListActivity;
+import hu.bme.aut.amorg.examples.todo.application.TodoApplication;
 import hu.bme.aut.amorg.examples.todo.db.TodoDbLoader;
 import hu.bme.aut.amorg.examples.todo.model.Todo;
 
 public class TodoAdapter extends CursorRecyclerViewAdapter<TodoAdapter.ViewHolder> {
     private boolean mTwoPane;
+    private TodoListActivity todoListActivity;
 
-    public TodoAdapter(Context context, Cursor cursor, boolean mTwoPane) {
+    public TodoAdapter(Context context, Cursor cursor, boolean mTwoPane, TodoListActivity todoListActivity) {
         super(context, cursor);
         this.mTwoPane = mTwoPane;
+        this.todoListActivity = todoListActivity;
+
     }
 
     @Override
@@ -34,7 +40,7 @@ public class TodoAdapter extends CursorRecyclerViewAdapter<TodoAdapter.ViewHolde
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, Cursor cursor) {
+    public void onBindViewHolder(ViewHolder holder, final Cursor cursor) {
         final Todo todo = TodoDbLoader.getTodoByCursor(cursor);
 
         holder.mTodo = todo;
@@ -74,6 +80,17 @@ public class TodoAdapter extends CursorRecyclerViewAdapter<TodoAdapter.ViewHolde
 
                     context.startActivity(intent);
                 }
+            }
+        });
+
+        holder.mView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                TodoDbLoader loader = TodoApplication.getTodoDbLoader();
+                loader.deleteTodo(todo.getId());
+                todoListActivity.refreshList();
+
+                return true;
             }
         });
     }

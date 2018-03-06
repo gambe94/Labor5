@@ -9,4 +9,5 @@
     <string name="btnCancel">Cancel</string>
     <string name="dummyDescription">dummyDescription</string>
     <string name="itemCreateTodo">Create</string>
+    <string name="delete_all_todos">Delete All Todos</string>
 </resources>

@@ -52,6 +52,14 @@ public class TodoDbLoader {
                 null) > 0;
     }
 
+    // DELETE All
+    public boolean deleteAll(){
+        return db.delete(
+                DbConstants.Todo.DATABASE_TABLE,
+                null,
+                null) > 0;
+    }
+
     // UPDATE
     public boolean updateProduct(long rowId, Todo newTodo){
         ContentValues values = new ContentValues();
@@ -105,7 +113,9 @@ public class TodoDbLoader {
                 c.getString(c.getColumnIndex(DbConstants.Todo.KEY_TITLE)), // title
                 c.getInt(c.getColumnIndex(DbConstants.Todo.KEY_PRIORITY)), // priority
                 c.getString(c.getColumnIndex(DbConstants.Todo.KEY_DUEDATE)), // dueDate
-                c.getString(c.getColumnIndex(DbConstants.Todo.KEY_DESCRIPTION)) // description
+                c.getString(c.getColumnIndex(DbConstants.Todo.KEY_DESCRIPTION)), // description
+                c.getLong(c.getColumnIndex(DbConstants.Todo.KEY_ROWID))
+
         );
     }
 }
